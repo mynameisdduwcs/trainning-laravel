@@ -21,11 +21,11 @@ return new class extends Migration
             $table->tinyInteger('gender');
             $table->date('birthdate');
             $table->tinyInteger('ethnic');
-            $table->string('hometown')->nullable();
-            $table->string('phone',13)->unique();
-            $table->string('email')->unique();
+            $table->string('hometown');
+            $table->string('phone',13);
+            $table->string('email');
             $table->bigInteger('faculty_id')->unsigned();
-            $table->longText('description')->nullable();
+            $table->longText('description');
 
             $table->timestamps();
 

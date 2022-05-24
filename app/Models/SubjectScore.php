@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class SubjectScore extends Model
 {
     use HasFactory;
-    protected $fillable=[
-        'point',
-
-    ];
+    protected $table = 'subject_scores';
+    protected $fillable = ['student_id', 'subject_id', 'point'];
 }

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     use HasFactory;
+    protected $table = 'students';
     protected $fillable = [
         'first_name',
         'last_name',
@@ -29,5 +30,9 @@ class Student extends Model
             get: fn ($value, $attributes) => $attributes['first_name'] . ' ' . $attributes['last_name'],
         );
     }
-    
+
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class,'subject_scores');
+    }
 }

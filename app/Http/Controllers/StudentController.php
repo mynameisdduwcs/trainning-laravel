@@ -137,7 +137,15 @@ class StudentController extends Controller
 
     public function savesubject(Request $request)
     {
-        $subject = $this ->pointRepo->create($request->all());
+        $student_id = $request->input('student_id');
+
+        // $subject = $request->input('subject_id');
+
+        // $point = $request->input('point');
+
+
+
+        $this-> studentsRepo->find($student_id)->subjects()->syncWithoutDetaching($request->subject_id);
         return redirect()->route('students.index');
     }
 }

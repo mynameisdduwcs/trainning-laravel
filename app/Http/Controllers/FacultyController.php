@@ -33,7 +33,7 @@ class FacultyController extends Controller
      */
     public function create()
     {
-        return view('faculties.create');
+        return view('faculties.create') ;
     }
 
     /**
@@ -44,7 +44,7 @@ class FacultyController extends Controller
      */
     public function store(Request $request)
     {
-        $faculties = $this->facultiesRepo->create($request->all());
+        $this->facultiesRepo->create($request->all());
         return redirect()->route('faculties.index');
     }
 

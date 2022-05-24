@@ -7,6 +7,8 @@
          <div class="row">
             <div class="col-md-6">
                <h3>Quản lý khoa</h3>
+
+
             </div>
 
             <div class="col-md-6">
@@ -14,6 +16,7 @@
             </div>
 
          </div>
+         
       </div>
 
       <div class="card-body">
@@ -36,10 +39,11 @@
                @foreach ($faculties as $faculty)
                <tr>
 
-                  <td > {{++$i}}</td>
+                  <td> {{++$i}}</td>
                   <td>{{$faculty->name}}</td>
                   <td>
-                     <form action="{{route('faculties.destroy', $faculty->id)}}" method="POST" style="text-align: center;">
+                     <form action="{{route('faculties.destroy', $faculty->id)}}" method="POST"
+                        style="text-align: center;">
                         <a href="{{route('faculties.edit', $faculty->id)}}" class="btn btn-info"> Sửa</a>
                         @csrf
                         @method('DELETE')
@@ -58,5 +62,3 @@
 </div>
 
 @endsection
-
-

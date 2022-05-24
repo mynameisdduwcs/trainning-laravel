@@ -30,11 +30,11 @@
                   <strong>Tên xinh viên</strong>
                   <div class="row g-3">
                      <div class="col">
-                        <input type="text" class="form-control" placeholder="Tên " id="inputName"
+                        <input type="text" class="form-control" placeholder="Họ đệm " id="inputName"
                            aria-label="First name" name='first_name'>
                      </div>
                      <div class="col">
-                        <input type="text" class="form-control" placeholder="Họ tên đệm" id="inputName"
+                        <input type="text" class="form-control" placeholder="Tên" id="inputName"
                            aria-label="Last name" name='last_name'>
                      </div>
                   </div>
