@@ -16,7 +16,6 @@ class Student extends Model
         'avatar',
         'gender',
         'birthdate',
-        'ethnic',
         'hometown',
         'phone',
         'email',
@@ -27,12 +26,14 @@ class Student extends Model
     protected function fullName(): Attribute
     {
         return Attribute::make(
-            get: fn ($value, $attributes) => $attributes['first_name'] . ' ' . $attributes['last_name'],
+            get: fn($value, $attributes) => $attributes['first_name'] . ' ' . $attributes['last_name'],
         );
     }
 
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class,'subject_scores');
+        return $this->belongsToMany(Subject::class, 'subject_scores');
     }
+
+
 }

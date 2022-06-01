@@ -12,8 +12,8 @@ class FacultiesRepository extends BaseRepository
         return \App\Models\Faculty::class;
     }
 
-    public function getFaculty()
-    {
-        return Faculty::paginate(20);
-    }
+//    public function getFaculty()
+//    {
+//        return Faculty::paginate(20);
+//    }
 }

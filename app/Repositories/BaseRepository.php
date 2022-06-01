@@ -2,9 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Repositories\RepositoryInterface;
-use Illuminate\Http\Request;
-
 abstract class BaseRepository implements RepositoryInterface
 {
     //model muốn tương tác
@@ -27,6 +24,11 @@ abstract class BaseRepository implements RepositoryInterface
         $this->model = app()->make(
             $this->getModel()
         );
+    }
+
+    public function paginate($number = 5)
+    {
+        return $this->model->paginate($number);
     }
 
     public function getAll()
@@ -80,5 +82,8 @@ abstract class BaseRepository implements RepositoryInterface
         }
     }
 
-
+    public function pluck($value, $key)
+    {
+        return $this->model->pluck($value, $key);
+    }
 }

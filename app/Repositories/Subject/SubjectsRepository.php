@@ -12,9 +12,5 @@ class SubjectsRepository extends BaseRepository
         return \App\Models\Subject::class;
     }
 
-    public function getSubject()
-    {
-        return Subject::paginate(20);
-    }
 
 }

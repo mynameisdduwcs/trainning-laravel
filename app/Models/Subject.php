@@ -13,8 +13,8 @@ class Subject extends Model
         'name',
     ];
 
-    public function students()
+    public function point()
     {
-        return $this->belongsToMany(Student::class);
+        return $this->hasMany(SubjectScore::class,'subject_id','id');
     }
 }

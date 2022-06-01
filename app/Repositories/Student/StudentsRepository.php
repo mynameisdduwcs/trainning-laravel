@@ -12,9 +12,9 @@ class StudentsRepository extends BaseRepository
         return \App\Models\Student::class;
     }
 
-    public function getStudent()
-    {
-        return Student::paginate(20);
-    }
+//    public function getStudent()
+//    {
+//        return Student::paginate(2);
+//    }
 
 }

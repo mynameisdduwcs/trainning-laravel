@@ -14,15 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('subject_scores', function (Blueprint $table) {
-            $table->id();
+
             $table->bigInteger('student_id')->unsigned();
             $table->bigInteger('subject_id')->unsigned();
-            $table->float('point', 8, 2);
+            $table->float('point', 8, 2)->default(0);
 
             $table->timestamps();
 
-            $table->foreign('student_id')->references('id')->on('students');
-            $table->foreign('subject_id')->references('id')->on('subjects');
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
         });
     }
 

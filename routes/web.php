@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\FacultyController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\SubjectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,9 +15,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\Http\Controllers\FacultyController;
-use App\Http\Controllers\StudentController;
-use App\Http\Controllers\SubjectController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -23,6 +23,14 @@ use App\Http\Controllers\SubjectController;
 Route::resource('faculties', FacultyController::class);
 Route::resource('students', StudentController::class);
 Route::resource('subjects', SubjectController::class);
-Route::get('/addsubject/{id}', [StudentController::class, 'addsubject'])->name('students.addsubject');
-Route::post('/savesub',[StudentController::class,'savesubject'])->name('student.savesubject');
-// Route::post('/savesub', [StudentController::class, 'savesubject'])->name('student.savesubject');
+
+Route::get('students/{student}/subjects', [StudentController::class, 'addSubject'])->name('students.subjects.index');
+Route::post('students/{student}/subjects', [StudentController::class, 'saveSubject'])->name('student.saveSubject');
+
+Route::get('/students/{student}/points', [StudentController::class, 'addPoint'])->name('students.addpoint.index');
+Route::post('/students/{student}/points',[StudentController::class, 'savePoint'])->name('students.savePoint');
+
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

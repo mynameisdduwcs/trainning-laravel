@@ -1,86 +1,81 @@
-@extends('layout.layout')
+@extends('layouts.layout')
 
 @section('content')
-<div class="container">
-   <div class="card">
-      <div class="card-header">
-         <div class="row">
-            <div class="col-md-6">
-               <h3>Quản lý sinh viên</h3>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>Student Management</h3>
+
+                    </div>
+
+                    <div class="col-md-6">
+                        <a href="{{route('students.create')}}" class="btn btn-primary float-end">ADD</a>
+                    </div>
+
+                </div>
 
             </div>
 
-            <div class="col-md-6">
-               <a href="{{route('students.create')}}" class="btn btn-primary float-end">THÊM</a>
+            <div class="card-body">
+
+
+                <table class="table table-bordered">
+
+                    <thead>
+                    <tr>
+                        <th style="text-align: center;width:10px;font-size: 70%">#</th>
+                        <th style="text-align: center;width:65px;font-size: 70%">Name student</th>
+                        <th style="text-align: center;width:65px;font-size: 70%">Avatar</th>
+                        <th style="text-align: center;width:65px;font-size: 70%">Gender</th>
+                        <th style="text-align: center;width:65px;font-size: 70%">Birthday</th>
+                        <th style="text-align: center;width:65px;font-size: 70%">Home town</th>
+                        <th style="text-align: center;width:65px;font-size: 70%">Phone number</th>
+                        <th style="text-align: center;width:65px;font-size: 70%">Email</th>
+                        <th style="text-align: center;width:65px;font-size: 70%">Faculty</th>
+                        <th style="text-align: center;width:65px;font-size: 70%">Description</th>
+                        <th style="text-align: center;width:65px;font-size: 70%">Action</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    @foreach ($students as $student)
+                        <tr>
+
+                            <td> {{++$i}}</td>
+                            <td>{{$student->full_name}}</td>
+                            <td><img style="width:60px; height:80px ;" src="{{$student->avatar}}"></td>
+                            <td>{{$student->gender===1 ? "Nam" : "Nữ";}}</td>
+                            <td>{{$student->birthdate}}</td>
+                            <td>{{$student->hometown}}</td>
+                            <td>{{$student->phone}}</td>
+                            <td>{{$student->email}}</td>
+                            <td>{{$student->id}}</td>
+                            <td>{{$student->description}}</td>
+
+                            <td>
+                                {!! Form::model($student, ['route' => ['students.destroy', $student->id], 'method' => 'DELETE']) !!}
+                                <a href="{{route('students.edit', $student->id)}}" class="btn btn-info"> Edit</a>
+                                <a href="{{route('students.subjects.index', $student->id)}}" class="btn btn-success">
+                                    Subject</a>
+                                <a href="{{route('students.addpoint.index', $student->id)}}" class="btn btn-dark">
+                                    Point</a>
+                                {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                {!! Form::close() !!}
+                            </td>
+                        </tr>
+                    @endforeach
+
+                    </tbody>
+
+                </table>
             </div>
 
-         </div>
-       
-      </div>
-
-      <div class="card-body">
-         @if(Session::has('notification'))
-         <div class="alert alert-success">
-            {{Session::get('notification')}}
-         </div>
-
-         @endif
-         <table class="table table-bordered">
-
-            <thead>
-               <tr>
-                  <th style="text-align: center;width:10px;font-size: 70%">STT</th>
-                  <th style="text-align: center;width:65px;font-size: 70%">Tên xinh viên</th>
-                  <th style="text-align: center;width:65px;font-size: 70%">Avatar</th>
-                  <th style="text-align: center;width:65px;font-size: 70%">Giới tính</th>
-                  <th style="text-align: center;width:65px;font-size: 70%">Ngày sinh</th>
-                  <th style="text-align: center;width:50px;font-size: 70%">Dân tộc</th>
-                  <th style="text-align: center;width:65px;font-size: 70%">Quê quán</th>
-                  <th style="text-align: center;width:65px;font-size: 70%">Số điện thoại</th>
-                  <th style="text-align: center;width:65px;font-size: 70%">Email</th>
-                  <th style="text-align: center;width:65px;font-size: 70%">Khoa</th>
-                  <th style="text-align: center;width:65px;font-size: 70%">Ghi chú</th>
-                  <th style="text-align: center;width:65px;font-size: 70%">Thao tác</th>
-               </tr>
-            </thead>
-
-            <tbody>
-               @foreach ($students as $student)
-               <tr>
-
-                  <td> {{++$i}}</td>
-                  <td>{{$student->full_name}}</td>
-                  <td> <img style="width:60px; height:80px ;" src="{{$student->avatar}}"> </td>
-                  <td>{{$student->gender===1 ? "Nam" : "Nữ";}}</td>
-                  <td>{{$student->birthdate}}</td>
-                  <td>{{$student->ethnic}}</td>
-                  <td>{{$student->hometown}}</td>
-                  <td>{{$student->phone}}</td>
-                  <td>{{$student->email}}</td>
-                  <td>{{$student->id}}</td>
-                  <td>{{$student->description}}</td>
-
-                  <td>
-                     <form action="{{route('students.destroy', $student->id)}}" method="POST"
-                        style="text-align: center;">
-                        <a href="{{route('students.edit', $student->id)}}" class="btn btn-info"> Sửa</a>
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Xoá</button>
-
-                        @method('GET')
-                        <a href="{{route('students.addsubject', $student->id)}}" class="btn btn-success"> Thêm môn</a>
-                     </form>
-                  </td>
-               </tr>
-               @endforeach
-
-            </tbody>
-
-         </table>
-      </div>
-
-   </div>
-</div>
+        </div>
+        <div style="margin-left: auto;margin-right: auto;width: 100%;">
+            {{$students->links("pagination::bootstrap-5")}}
+        </div>
+    </div>
 
 @endsection

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('avatar', 255);
             $table->tinyInteger('gender');
             $table->date('birthdate');
-            $table->tinyInteger('ethnic');
+
             $table->string('hometown');
             $table->string('phone',13);
             $table->string('email');
@@ -29,7 +29,7 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->foreign('faculty_id')->references('id')->on('faculties');
+            $table->foreign('faculty_id')->references('id')->on('faculties')->onDelete('cascade');
         });
     }
 

@@ -8,11 +8,13 @@ use App\Repositories\Subject\SubjectsRepository;
 
 class SubjectController extends Controller
 {
+    protected $subjectsRepo;
 
     public function __construct(SubjectsRepository $subjectsRepo)
     {
-        $subjects = $this->subjectsRepo = $subjectsRepo;
+        $this->subjectsRepo = $subjectsRepo;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +22,8 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        $subjects = $this->subjectsRepo->getAll();
+        $subjects = $this->subjectsRepo->paginate( );
+
         return view('subjects.index', compact('subjects'))->with('i');
     }
 
@@ -31,7 +34,7 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        return view('subjects.create');
+        return view('subjects.edit_create');
     }
 
     /**
@@ -42,7 +45,8 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
-        $subjects = $this->subjectsRepo->create($request->all());
+        $this->subjectsRepo->create($request->all());
+
         return redirect()->route('subjects.index');
     }
 
@@ -65,8 +69,8 @@ class SubjectController extends Controller
      */
     public function edit($id)
     {
-        $subjects = $this->subjectsRepo->find($id);
-        return view('subjects.edit', compact('subjects'));
+        $subject = $this->subjectsRepo->find($id);
+        return view('subjects.edit_create', compact('subject'));
     }
 
     /**
@@ -90,7 +94,7 @@ class SubjectController extends Controller
      */
     public function destroy($id)
     {
-        $subjects = $this->subjectsRepo->find($id)->delete();
+        $subject = $this->subjectsRepo->find($id)->delete();
         return redirect()->route('subjects.index');
     }
 }

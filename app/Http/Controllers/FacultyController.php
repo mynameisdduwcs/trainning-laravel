@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Faculty;
 use App\Repositories\Faculty\FacultiesRepository;
+use Illuminate\Http\Request;
 
 
 class FacultyController extends Controller
 
 {
-
+    protected $facultiesRepo;
     public function __construct(FacultiesRepository $facultiesRepo)
     {
         $this->facultiesRepo = $facultiesRepo;
@@ -22,7 +21,7 @@ class FacultyController extends Controller
      */
     public function index()
     {
-        $faculties = $this->facultiesRepo->getFaculty();
+        $faculties = $this->facultiesRepo->paginate(5);
         return view('faculties.index', compact('faculties'))->with('i');
     }
 
@@ -33,7 +32,7 @@ class FacultyController extends Controller
      */
     public function create()
     {
-        return view('faculties.create') ;
+        return view('faculties.edit_create') ;
     }
 
     /**
@@ -68,8 +67,8 @@ class FacultyController extends Controller
     public function edit($id)
     {
 
-        $faculties = $this -> facultiesRepo->find($id);
-        return view('faculties.edit',compact('faculties'));
+        $faculty = $this -> facultiesRepo->find($id);
+        return view('faculties.edit_create',compact('faculty'));
 
 
     }
@@ -83,8 +82,8 @@ class FacultyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $faculties = $this ->facultiesRepo->find($id);
-        $faculties->update($request->all());
+        $faculty = $this ->facultiesRepo->find($id);
+        $faculty->update($request->all());
         return redirect()->route('faculties.index');
     }
 
@@ -96,8 +95,8 @@ class FacultyController extends Controller
      */
     public function destroy($id)
     {
-        $faculties =$this ->facultiesRepo->find($id);
-        $faculties->delete();
+        $faculty =$this ->facultiesRepo->find($id);
+        $faculty->delete();
         return redirect()->route('faculties.index');
     }
 }

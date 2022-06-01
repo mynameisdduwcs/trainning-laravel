@@ -12,9 +12,9 @@ class SubjectScoreRepository extends BaseRepository
         return \App\Models\SubjectScore::class;
     }
 
-    public function getSubjectScore()
-    {
-        return SubjectScore::paginate(20);
-    }
+//    public function getSubjectScore()
+//    {
+//        return SubjectScore::paginate(20);
+//    }
 
 }

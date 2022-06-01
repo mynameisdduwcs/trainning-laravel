@@ -38,4 +38,8 @@ interface RepositoryInterface
      * @return mixed
      */
     public function delete($id);
+
+    public  function paginate();
+
+    public function pluck($value, $key);
 }
