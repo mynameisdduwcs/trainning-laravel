@@ -32,7 +32,7 @@ class Student extends Model
 
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class, 'subject_scores');
+        return $this->belongsToMany(Subject::class, 'subject_scores')->withPivot('point');
     }
 
 

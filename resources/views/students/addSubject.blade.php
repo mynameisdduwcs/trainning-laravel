@@ -33,17 +33,4 @@
 
 @endsection
 
-{{--<form action="{{route('student.saveSubject',$student)}}" method="POST">--}}
-{{--    <input type="hidden" name="_token" value="{{ csrf_token() }}">--}}
-{{--    @foreach($subjects as $item)--}}
-{{--        <div class="form-check">--}}
-{{--            <input name="subject_id[]" class="form-check-input" type="checkbox"--}}
-{{--                   value="{{$item->id}}" {{$student->subjects->contains($item->id)?'checked':''}} >--}}
-{{--            <label class="form-check-label" for="flexCheckDefault">--}}
-{{--                {{$item->name}}--}}
-{{--            </label>--}}
-{{--        </div>--}}
-{{--    @endforeach--}}
 
-{{--    <button type="submit" class="btn btn-success mt-2">Submit</button>--}}
-{{--</form>--}}

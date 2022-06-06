@@ -20,7 +20,6 @@ class StudentController extends Controller
         FacultiesRepository    $facultiesRepo,
         SubjectsRepository     $subjectsRepo,
         SubjectScoreRepository $pointRepo,
-
     )
     {
         $this->studentsRepo = $studentsRepo;
@@ -28,6 +27,7 @@ class StudentController extends Controller
         $this->subjectsRepo = $subjectsRepo;
         $this->pointRepo = $pointRepo;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -57,7 +57,7 @@ class StudentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -77,7 +77,7 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -88,7 +88,7 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -101,8 +101,8 @@ class StudentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -110,12 +110,9 @@ class StudentController extends Controller
         $getAll = $request->all();
         if ($request->has('avatar')) {
             $file_name = $request->file('avatar');
-
             $post_file = $file_name->move('images', $file_name->getClientOriginalName());
         }
         $getAll['avatar'] = $post_file;
-
-
         $student = $this->studentsRepo->find($id);
         $student->update($getAll);
 
@@ -125,7 +122,7 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -154,15 +151,22 @@ class StudentController extends Controller
     public function addPoint($id)
     {
 
-        $student = $this->studentsRepo->find($id);
-        $subject =  $student->subjects->pluck('name', 'id')->toArray();
-        $subjects = $this->subjectsRepo->getAll();
-        $this->pointRepo
+//        $student = $this->studentsRepo->find($id);
+//        $subject = $student->subjects->pluck('name', 'id')->toArray();
+//        $subjects = $this->subjectsRepo->getAll();
+        $getSubjects = $this->subjectsRepo->getAll();
 
-        return view('students.addPoint', compact('subject', 'student', 'subjects','point'));
+        $findStudentId = $this->studentsRepo->find($id);
+        $getSubjectsById = $findStudentId->subjects;
+
+        $getUnnsubjects = $getSubjects->diff($getSubjectsById)->pluck('name', 'id')->toArray();
+
+
+
+        return view('students.addPoint', compact('getSubjects', 'findStudentId', 'getSubjectsById', 'getUnnsubjects'));
     }
 
-    public function savePoint(Request $request, $id)
+    public function savePoint(Request $request,$id)
     {
 
 
@@ -179,7 +183,8 @@ class StudentController extends Controller
             $point[$value['subject_id']] = ['point' => $value['point']];
         }
 
-        $this->studentsRepo->find($id)->subjects()->syncWithoutDetaching($point);
+        $this->studentsRepo->find($id)->subjects()->sync($point);
+//        $this->studentsRepo->find($student_id)->subjects()->sync($request->subject_id);
 
         return redirect()->route('students.index');
     }
